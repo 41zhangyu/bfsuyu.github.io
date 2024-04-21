@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>豫剧</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: rgba(127, 55, 45);
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .a {
+            position: relative;
+            width: 650px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .b {
+            width: 400px;
+            height: 500px;
+            transition: .4s;
+            background-size: cover;
+        }
+
+        .c {
+            width: 200px;
+            height: 500px;
+            display: flex;
+            /* 纵向布局 */
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .d {
+            position: relative;
+            width: 200px;
+            height: 90px;
+            right: 0;
+            transition: .5s;
+            overflow: hidden;
+        }
+
+        .d img {
+            position: absolute;
+            width: 200px;
+            /* 小图片上移 */
+            transform: translate(0, -50px);
+            transition: .5s;
+            right: 0;
+        }
+
+        .d.dd {
+            opacity: 0;
+            right: 250px;
+        }
+
+        .d:hover img {
+            opacity: 0;
+            right: 250px;
+        }
+
+        .d span {
+            position: absolute;
+            top: 50%;
+            right: -200px; /* 将文字解释隐藏在屏幕外 */
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            white-space: nowrap;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a">
+        <div class="b" style="background-image: url('./images/1陈素真.jpg');"></div>
+        <div class="c">
+            <div class="d dd">
+                <img src="./images/1陈素真.jpg" alt="">
+                <span>陈素真</span>
+            </div>
+            <div class="d">
+                <img src="./images/2常香玉.jpg" alt="">
+                <span>常香玉</span>
+            </div>
+            <div class="d">
+                <img src="./images/3崔兰田.jpg" alt="">
+                <span>崔兰田</span>
+            </div>
+            <div class="d">
+                <img src="./images/4马金凤.jpg" alt="">
+                <span>马金凤</span>
+            </div>
+            <div class="d">
+                <img src="./images/5阎立品.png" alt="">
+                <span>阎立品</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 获取左边大图的元素
+        let b = document.querySelector(".b");
+        // 获取右边小图的所有元素
+        let d = document.getElementsByClassName("d");
+
+        let time;
+        let index = 0;
+
+        // 设置一个重置函数
+        let a = function() {
+            for (let i = 0; i < d.length; i++) {
+                d[i].className = "d";
+            }
+        };
+        // 设置一个选中函数
+        let aa = function() {
+            // 先代入重置函数
+            a();
+            d[index].className = "d dd";
+            d[index].querySelector("span").style.right = "0"; // 显示文字解释
+        };
+        // 设置启动轮播图的时间函数
+        function ts() {
+            time = setInterval(function() {
+                aa();
+                index++;
+                if (index >= d.length) {
+                    index = 0;
+                }
+                b.style.backgroundImage = "url('" + d[index].querySelector("img").src + "')";
+            }, 1500);
+        }
+        for (let i = 0; i < d.length; i++) {
+            // 鼠标移动到当前小图片上时触发
+            d[i].onmousemove = function() {
+                // 鼠标移动到当前小图片时右边大图片变成当前的小图片
+                b.style.backgroundImage = "url('" + this.querySelector("img").src + "')";
+                // 鼠标移动到小图片上面时关闭定时器并重置定时，
+                // 鼠标移开后再继续执行
+                a();
+                clearInterval(time);
+                index = i;
+                ts();
+            };
+        }
+        // 执行轮播图
+        ts();
+    </script>
+</body>
+
+</html>

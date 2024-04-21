@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>豫剧</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url(./images/背景.jpg);
+      background-size: cover;
+    }
+
+    #main {
+      
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #click-section {
+      width: 35%;
+      height: 100%;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    #drawerboxes {
+      margin-left: 10%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    #drawerboxes::before {
+      content: "";
+      width: 8px;
+      height: 94%;
+      position: absolute;
+      left: -10px;
+      top: 3%;
+      z-index: 120;
+    }
+
+    .drawerbox {
+      height: calc(100% / 5.5);
+      width: 70%;
+      position: relative;
+      z-index: 100;
+      transform: translateX(-70%);
+      transition: transform .5s ease-in-out;
+    }
+
+    .drawerbox.active {
+      transform: translateX(0);
+    }
+
+    .drawer-btn {
+      width: 100%;
+      height: 100%;
+      font: 800 40px '';
+      background-color: rgb(127, 55, 45);
+      border: none;
+      transition: background-color .5s ease-in-out;
+      color: #ffffff00;
+      text-align: left; /* 文字左对齐 */
+      padding-left: 10px; /* 左侧内边距 */
+    }
+
+    .drawer-btn.active {
+      background-image: url(./images/侧边栏.jpg);
+      background-size: cover;
+      color: rgb(233, 226, 210);
+    }
+
+    .drawer-btn:hover {
+      cursor: pointer;
+    }
+
+    .drawer-head {
+      position: absolute;
+      color: rgb(255, 255, 255);
+      font-size: 190px;
+      font-weight: 700;
+      right: -39px;
+      top: calc(50% - 130px);
+      text-shadow: 2px -1px 8px rgba(250, 80, 193, 0.323);
+    }
+
+    #slide-section {
+      position: relative;
+      height: 100%;
+      width: 65%;
+      display: flex;
+      justify-content: center;
+      padding: 0 40px;
+      background: linear-gradient(to right bottom,
+          rgba(255, 255, 255, .6),
+          rgba(255, 255, 255, .3),
+          rgba(255, 255, 255, .2));
+      backdrop-filter: blur(11px);
+    }
+
+    #slide-bar {
+      position: absolute;
+      top: 10%;
+      left: 40px;
+      height: 80%;
+      width: 1px;
+      background-color: rgb(223, 223, 223);
+    }
+
+    #bar {
+      position: absolute;
+      height: calc(100% / 4);
+      width: 5px;
+      top: 0;
+      left: -1.2px;
+      background-color: rgb(127, 55, 45);
+      transition: transform .5s ease-in-out;
+    }
+
+    #card-section {
+      height: 100%;
+      width: 80%;
+      overflow: hidden;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      padding: 10% 0;
+      color: white;
+      font-size: 30px;
+      transition: transform .5s ease-in-out;
+    }
+
+    
+
+    .card-title {
+      font-size: 80px;
+      font-weight: 700;
+      padding-bottom: min(20%, 40px);
+      color: rgb(127, 55, 45);
+    }
+
+    .card-content {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgb(127, 55, 45);
+      margin-bottom: 60px;
+      text-align: justify;
+      text-indent: 2em;
+    }
+
+    .card-img {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div id="click-section">
+      <div id="drawerboxes">
+        <div class="drawerbox active">
+          <button class="drawer-btn active" onclick="slideTo(1)">主页<span
+              class="drawer-head">1</span></button>
+        </div>
+        <div class="drawerbox">
+          <button class="drawer-btn" onclick="slideTo(2)">基本特征<span
+              class="drawer-head">2</span></button>
+        </div>
+        <div class="drawerbox">
+          <button class="drawer-btn" onclick="slideTo(3)">主要流派<span class="drawer-head">3</span></button>
+        </div>
+        <div class="drawerbox">
+          <button class="drawer-btn" onclick="slideTo(4)">经典唱段<span class="drawer-head">4</span></button>
+        </div>
+      </div>
+    </div>
+    <div id="slide-section">
+      <div id="slide-bar">
+        <div id="bar"></div>
+      </div>
+      <div id="card-section">
+        <div id="card1" class="card">
+          <div class="card-title">豫剧</div>
+          <div class="card-content">豫剧，是中国五大戏曲剧种之一、中国第一大地方剧种，是主要流行于河南省、河北、山东，流传中国各地的传统戏剧，
+            国家级非物质文化遗产之一。豫剧与京剧、越剧同为中国戏曲三鼎甲，传承已有上百年的历史，早在清代乾隆年间，已成为河南很有影响的戏曲剧种。
+            豫剧在生成和发展时期，汲取了昆腔、吹腔、皮簧及其他梆子声腔剧种的艺术因素，同时广泛吸收河南民间流行的音乐、曲艺说唱和俗曲小令，
+            形成了朴直淳厚、丰富细腻、富于乡土气息的剧种特色。
+            <div class="card-content">
+              <p style="text-indent: 2em;">源远流长的中原乐舞文化，孕育了丰富多彩的中原戏曲艺术。明清地方戏的兴起，使河南成为神州瞩目的“戏乡”，而豫剧正是这⾥的众多剧种中发展迅猛、影响最⼤的⼀个剧种。得益于天时、地利、人和和根基深厚，豫剧在诞生后仅仅200年的时间里，便迅速传播到东至台湾、西至新疆、南达深圳、北至黑龙江的21个地方。20世纪80年代以来，豫剧已被公认为当今艺坛上的“叫座剧种”，在剧目生产、经济
+              效益、剧团和观众数量诸多方面，都以绝对优势跃居全国300多个剧种之冠，堪称当今中国最大的地方戏。</p></div>
+          <div class="card-img">
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+          
+        
+    // 定义变量 
+    let chosenSlideNumber = 1; // 当前选择的幻灯片编号 
+    let offset = 0; // 幻灯片偏移量 
+    let barOffset = 0; // 导航条偏移量 
+    let intervalID; // 定时器 ID 
+    // 启动幻灯片轮播 
+    startSlide();
+    // 获取所有抽屉按钮，并为每个按钮添加点击事件监听器 
+    const drawerBtns = Array.from(document.querySelectorAll(".drawer-btn"));
+    drawerBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        clearInterval(intervalID); // 清除定时器 
+        startSlide(); // 重新启动幻灯片轮播 
+      })
+    })
+    // 获取幻灯片区域 
+    const slideSection = document.querySelector("#slide-section");
+    // 鼠标移入幻灯片区域时清除定时器 
+    slideSection.addEventListener("mouseenter", () => {
+      clearInterval(intervalID);
+    })
+    // 鼠标移出幻灯片区域时重新启动幻灯片轮播 
+    slideSection.addEventListener("mouseleave", () => {
+      startSlide();
+    })
+    // 切换到指定编号的幻灯片 
+    function slideTo(slideNumber) {
+      setTimeout(() => {
+        if(slideNumber == 2){
+          window.location.href = './张雨-豫剧-基本特征.html'
+        }else if(slideNumber == 3){
+          window.location.href = './张雨-豫剧-主要流派.html'
+        }else if(slideNumber == 4){
+          window.location.href = './张雨-豫剧-经典唱段.html'
+        }
+      }, 500);
+      drawerboxToggle(slideNumber); // 切换抽屉面板状态 
+      drawerbtnToggle(slideNumber); // 切换抽屉按钮状态 
+      // 更新偏移量 
+      let previousSlideNumber = chosenSlideNumber;
+      chosenSlideNumber = slideNumber;
+      offset += (chosenSlideNumber - previousSlideNumber) * (-100); // 计算幻灯片偏移量 
+      barOffset += (chosenSlideNumber - previousSlideNumber) * (100); // 计算导航条偏移量 
+      barSlide(barOffset); // 移动导航条 
+      // 获取所有幻灯片，为每个幻灯片设置偏移量 
+      const slides = document.querySelectorAll(".card");
+      Array.from(slides).forEach(slide => {
+        slide.style.transform = `translateY(${offset}%)`;
+      })
+    }
+    // 切换抽屉面板状态 
+    function drawerboxToggle(drawerboxNumber) {
+      let prevDrawerboxNumber = chosenSlideNumber;
+      const drawerboxes = document.querySelectorAll(".drawerbox");
+      drawerboxes[prevDrawerboxNumber - 1].classList.toggle("active"); // 切换前一个抽屉面板的状态 
+      drawerboxes[drawerboxNumber - 1].classList.toggle("active"); // 切换当前抽屉面板的状态 
+    }
+    // 切换抽屉按钮状态 
+    function drawerbtnToggle(drawerBtnNumber) {
+      let prevDrawerBtnNumber = chosenSlideNumber;
+      const drawerBtns = document.querySelectorAll(".drawer-btn");
+      drawerBtns[prevDrawerBtnNumber - 1].classList.toggle("active"); // 切换前一个抽屉按钮的状态 
+      drawerBtns[drawerBtnNumber - 1].classList.toggle("active"); // 切换当前抽屉按钮的状态 
+    }
+    // 移动导航条 
+    function barSlide(barOffset) {
+      const bar = document.querySelector("#bar");
+      bar.style.transform = `translateY(${barOffset}%)`;
+    }
+    
+
+
+
+  </script>
+</body>
+
+</html>
